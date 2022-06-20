@@ -20,19 +20,23 @@ public class ForumDaoImpl implements ForumDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-
+	
 	@Override
 	public List<Forum> getForums() {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM Forum";
 		List<Forum> list = new ArrayList<Forum>();
-		
-		String hql = "from Forum";
-		Query<Forum> query = session.createQuery(hql,Forum.class);  
-		list = query.getResultList();
-		if(list != null) {			
-			return list;
+		for(Forum forum : list) {
+			System.out.println(forum);
 		}
-		return null;
+		
+		list = session.createQuery(hql,Forum.class)
+									.getResultList();
+		
+//		if(list != null) {			
+			return list;
+//		}
+//		return null;
 	}
 
 	@Override
