@@ -24,7 +24,23 @@ public class ForumServiceImpl implements ForumService {
 
 	@Override
 	public void saveForum(Forum forum) {
-		forumDao.saveForum(forum);
+		 forumDao.saveForum(forum);
+	}
+
+	 public List<Forum> list() {
+	      return forumDao.list();
+	   }
+
+	@Override
+	public void updateForum(Forum forum) {
+		forumDao.updateForum(forum);
+		
+	}
+
+	@Override
+	public void deleteForumByPrimaryKey(int key) {
+		forumDao.deleteForumByPrimaryKey(key);
+		
 	}
 
 }

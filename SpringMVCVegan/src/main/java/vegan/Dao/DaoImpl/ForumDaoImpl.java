@@ -42,8 +42,28 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public void saveForum(Forum forum) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		currentSession.saveOrUpdate(forum);
+		 currentSession.save(forum);		
+	}
+
+	@Override
+	public List<Forum> list() {
+		Query<Forum> query = sessionFactory.getCurrentSession().createQuery("from Forum");
+		return query.getResultList();
+	}
+
+	@Override
+	public void updateForum(Forum forum) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(forum);
 		
+	}
+
+	@Override
+	public void deleteForumByPrimaryKey(int key) {
+		Session session = sessionFactory.getCurrentSession();
+		Forum forum = new Forum();
+		forum.setForumid(key);
+		session.delete(forum);
 	}
 
 }

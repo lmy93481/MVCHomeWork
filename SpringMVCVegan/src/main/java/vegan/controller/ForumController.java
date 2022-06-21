@@ -1,17 +1,22 @@
 package vegan.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import vegan.model.Forum;
 import vegan.service.ForumService;
@@ -22,36 +27,37 @@ public class ForumController {
 	@Autowired
 	private ForumService forumService;
 	
-	
-	@GetMapping("/add.controller")
-	public String add() {
-		return "addforum";
-	}
-	
-//	@GetMapping("/list")
 	@RequestMapping(value = "/list" , method = RequestMethod.GET)
 	public String listForum( Model model) {
 		List<Forum> forums = forumService.getForums();
-		model.addAttribute("f",forums);
+		model.addAttribute("forums",forums);
 		return "forum";
 	}
 	
-	@PostMapping("/add.controller")
-	public String saveForum(@ModelAttribute("forum") Forum forum,BindingResult bindingResult) {
-		
-		forumService.saveForum(forum);
-		
-		
-		return "success";
-		
-	}
+	@GetMapping("/insert")
+	public String insert() {
+			return "addforum";
+		}
 	
-//	@RequestMapping(value = "/list1" , method = RequestMethod.GET)
-//	public String queryForum(@RequestParam("forumTitle") String forumTitle ,@RequestParam("forumContent") String forumContent,@RequestParam("forumDate") String forumDate) {
-//		List<Forum> forums = forumService.getForums();
-//		model.addAttribute(forums);
-//		return "forum";
-//	}
+	@GetMapping("/add.controller")
+	public String saveForum (@ModelAttribute("forum") Forum forum, BindingResult result, Model model) {
+			if(result.hasErrors()) {
+				model.addAttribute("forums", forumService.list());
+				return "editForum";
+			}
+			forumService.saveForum(forum);
+			return "redirect:list";
+		}
+
+	@GetMapping(value="/list/{id}")
+	public String deleteCustomerData(@PathVariable Integer id) {
+		System.out.println(11122233);
+		forumService.deleteForumByPrimaryKey(id);	
+		return "redirect:list";
+	}
+
+	
+
 	
 	
 }

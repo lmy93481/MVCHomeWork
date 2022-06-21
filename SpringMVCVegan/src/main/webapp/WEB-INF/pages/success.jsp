@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-新增成功
+新增成功<br/>
+<a href='<c:url value="/list"/>'>回首頁</a>
+
 </body>
 </html>
