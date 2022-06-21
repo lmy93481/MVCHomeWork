@@ -42,6 +42,7 @@
 <table border='1'>
 			
 			<tr>
+				<th width='60' >號碼</th>
 				<th width='60' >標題</th>
 				<th width='160'>留言</th>
 				<th width='160'>日期</th>
@@ -49,13 +50,14 @@
 			
 					<c:forEach var='forums' items="${forums}">
 						
-						<tr>
+						<tr> 
+						<td align='center'><a href='list/${forums.forumid}'>${forums.forumid}</a></td>
 							<td align='center'><c:out value="${forums.forumTitle}"/></td>
 							<td align='center'><c:out value="${forums.forumContent}"/></td>
 							<td align='center'><c:out value="${forums.forumDate}"/></td>
-							<td><a href="<c:url value='/insert'></c:url>">更新留言</a></td>
-							<td><input type='submit' value='刪除' name='deleteBtn' onclick="return confirmDelete('${forum.forumid}');" ></td>
-							
+							<td><a href="<c:url value='/edit/${forums.forumid}'></c:url>">更新留言</a></td>
+							<td><a href="<c:url value="list/${forums.forumid}"></c:url>">刪除留言</a></td>
+<%-- 							<td><input type='submit' value='刪除' name='deleteBtn' onclick="return confirmDelete('${forum.forumid}');" ></td> --%>					
 						</tr>
 					</c:forEach>
 				

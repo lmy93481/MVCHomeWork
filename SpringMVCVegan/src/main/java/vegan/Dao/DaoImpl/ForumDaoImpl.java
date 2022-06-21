@@ -3,12 +3,15 @@ package vegan.Dao.DaoImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import vegan.Dao.ForumDao;
 import vegan.model.Forum;
@@ -64,6 +67,21 @@ public class ForumDaoImpl implements ForumDao {
 		Forum forum = new Forum();
 		forum.setForumid(key);
 		session.delete(forum);
+	}
+
+	@Override
+	public Forum getForumById(int id) {
+		Forum bean = null;
+		Session session = sessionFactory.getCurrentSession();
+		String hql  = "FROM Forum forum WHERE forum.forumid = :id";
+		try {
+			bean = (Forum)session.createQuery(hql)
+									.setParameter("id", id)
+									.getSingleResult();
+		} catch(NoResultException e) {
+			;  
+		}
+		return bean;
 	}
 
 }

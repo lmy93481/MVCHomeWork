@@ -15,4 +15,6 @@ public interface ForumService {
 	void updateForum(Forum forum); 
 
 	void deleteForumByPrimaryKey(int key);
+	
+	public Forum getForumById(int id);
 }

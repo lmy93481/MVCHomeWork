@@ -43,4 +43,10 @@ public class ForumServiceImpl implements ForumService {
 		
 	}
 
+	@Override
+	public Forum getForumById(int id) {
+		forumDao.getForumById(id);
+		return null;
+	}
+
 }

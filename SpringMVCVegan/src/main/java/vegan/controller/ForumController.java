@@ -2,6 +2,7 @@ package vegan.controller;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 import vegan.model.Forum;
 import vegan.service.ForumService;
@@ -50,10 +50,26 @@ public class ForumController {
 		}
 
 	@GetMapping(value="/list/{id}")
-	public String deleteCustomerData(@PathVariable Integer id) {
+	public String deleteForumById(@PathVariable Integer id) {
 		System.out.println(11122233);
 		forumService.deleteForumByPrimaryKey(id);	
-		return "redirect:list";
+		return "success";
+	}
+	
+	@GetMapping("/edit")
+	public String edit() {
+			return "editforum";
+		}
+	
+	@GetMapping("/edit/{id}")
+	public String editForumById(Model model, @PathVariable("id") Integer id , Map<String,Object> map) {
+		Forum forum = forumService.getForumById(id);
+		map.put("forum", forum);
+//		bean.setForumid(bean.getForumid());
+//		bean.setForumTitle(bean.getForumTitle());
+//		bean.setForumContent(bean.getForumContent()); 
+		model.addAttribute("forum", forum);
+		return "editforum";
 	}
 
 	
